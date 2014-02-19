@@ -4,7 +4,41 @@
     
     <body>
         <script>
-{{ jscript }}
-        </script>
-    </body>
-</html>
+            function advance(time, term, data, pos, self) {
+                for (; pos < data.length; pos++) {
+                    if (data[pos][1] <= time) {
+                        term.write(data[pos][0]);
+                    } else {
+                        break;
+                    }
+                }
+
+                if (pos >= data.length) {
+                    clearInterval(self);
+                }
+                return pos;
+            }
+
+            window.addEventListener('load', function() {
+                var data = {{ json }};
+                var DELTA = 10;
+                var time = 1;
+                var pos = 0;
+                var self;
+
+                var term = new Terminal({
+                                            cols: 80,
+                                            rows: 24,
+                                            screenKeys: true
+                                        });
+
+
+                term.open(document.body);
+                self = setInterval(function(){ pos = advance(time, term,
+                                               data, pos, self);
+                                               time += DELTA;
+                                             }, DELTA);
+            }, false);
+            </script>
+        </body>
+    </html>

@@ -6,24 +6,11 @@
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import  Environment
 
+from json import dumps
 from math import ceil
 from mmap import mmap
 from os.path import basename,dirname
 from sys import argv
-
-
-
-HEADER      = r'''window.addEventListener('load', function() {
-    var term = new Terminal({
-        cols: 80,
-        rows: 24,
-        screenKeys: true
-    });
-
-    term.open(document.body);
-'''
-FOOTER      = r'''}, false);'''
-TEMPLATE    = 'setTimeout(function() {term.write(\'%s\');}, %d);\n'
 
 
 
@@ -32,30 +19,28 @@ def getTiming(timefname):
     with open(timefname, 'r') as timef:
         timing = [l.strip().split(' ') for l in timef]
         timing = [(int(ceil(float(r[0]) * 1000)), int(r[1])) for r in timing]
-    return timing    
+    return timing
 
-def scriptToJS(scriptfname, timing=None):
-    ret = HEADER
+def scriptToJSON(scriptfname, timing=None):
+    ret = []
 
     with open(scriptfname, 'rb') as scriptf:
         scriptf.readline() # ignore first header line from script file 
         offset = 0
         for t in timing:
-            data = scriptf.read(t[1]).decode('utf-8').encode('unicode-escape')
+            data = scriptf.read(t[1]).decode('utf-8')
             data = data.replace("'", "\\'") # necessary fixup
             offset += t[0]
-            ret += TEMPLATE % (data, offset)
-    
-    ret += FOOTER
-    return ret
+            ret.append((data, offset))
+    return dumps(ret)
 
-def renderTemplate(js, templatename, outputname=None):
+def renderTemplate(json, templatename, outputname=None):
     fsl = FileSystemLoader(dirname(templatename), 'utf-8')
     e = Environment()
     e.loader = fsl
 
     templatename = basename(templatename)
-    rendered = e.get_template(templatename).render(jscript=js)
+    rendered = e.get_template(templatename).render(json=json)
 
     if not outputname:
         return rendered
@@ -80,10 +65,10 @@ if __name__ == '__main__':
     if timefname:
         timing = getTiming(timefname)
 
-    js = scriptToJS(scriptfname, timing)
+    json = scriptToJSON(scriptfname, timing)
     if tmpname and outname:
-        renderTemplate(js, tmpname, outname)
+        renderTemplate(json, tmpname, outname)
     elif tmpname:
-        print renderTemplate(js, tmpname) 
+        print renderTemplate(json, tmpname) 
     else:
         print js
