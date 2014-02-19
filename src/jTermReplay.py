@@ -14,12 +14,11 @@ from sys import argv
 HEADER      = r'''window.addEventListener('load', function() {
     var term = new Terminal({
         cols: 80,
-        rows: 30,
+        rows: 24,
         screenKeys: true
     });
 
     term.open(document.body);
-    term.write('\x1b[31m--- Replaying Script ---\x1b[m\r\n');
 '''
 FOOTER      = r'''}, false);'''
 TEMPLATE    = 'setTimeout(function() {term.write(\'%s\');}, %d);\n'
