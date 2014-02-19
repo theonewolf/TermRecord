@@ -48,18 +48,24 @@ def scriptToJS(scriptfname, timing=None):
     ret += FOOTER
     return ret
 
-def renderTemplate(js, templatename, outputname):
-    with open(templatename, 'rt') as tmpf:
-        with open(outputname, 'wt') as outf:
-            Template(tmpf.read().decode('utf-8')).stream(jscript=js).dump(outf)
+def renderTemplate(js, templatename, outputname=None):
+    with open(templatename, 'r') as tmpf:
+        rendered = Template(tmpf.read().decode('utf-8')).render(jscript=js)
+
+        if not outputname:
+            return rendered
+
+        with open(outputname, 'w') as outf:
+            outf.write(rendered)
+
 
 
 if __name__ == '__main__':
     argv        =   dict(enumerate(argv))
     scriptfname =   argv.get(1)
     timefname   =   argv.get(2)
-    tmpname     =   argv.get(3)
-    outname     =   argv.get(4)
+    tmpname     =   argv.get(3) # optional
+    outname     =   argv.get(4) # optional
     timing      =   None
 
     if not scriptfname:
@@ -72,5 +78,7 @@ if __name__ == '__main__':
     js = scriptToJS(scriptfname, timing)
     if tmpname and outname:
         renderTemplate(js, tmpname, outname)
+    elif tmpname:
+        print renderTemplate(js, tmpname) 
     else:
         print js
