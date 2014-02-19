@@ -1,0 +1,9 @@
+Script started on Tue 18 Feb 2014 06:10:32 PM EST
+]0;fish  /home/wolf/Dropbox/Projects-current/jTermReplay/examples[30m(B[mWelcome to fish, the friendly interactive shell
+Type [32mhelp[30m(B[m for instructions on how to use fish
+]0;fish  /home/wolf/Dropbox/Projects-current/jTermReplay/examples[30m(B[m[38;5;245m⏎[0m                                                                               [1m[31m➜ [1m[36mexamples[30m(B[m>[Kl[31m[1ml(B[ms[31m[1ms(B[m[32m[4mls[30m(B[m
+[30m(B[m]0;ls  /home/wolf/Dropbox/Projects-current/jTermReplay/examples[30m(B[mls.script  ls.time
+]0;fish  /home/wolf/Dropbox/Projects-current/jTermReplay/examples[30m(B[m[38;5;245m⏎[0m                                                                               [1m[31m➜ [1m[36mexamples[30m(B[m>[Ke[31m[1me(B[mx[38;5;240mit[30m(B[m[31m[1mx(B[mi[38;5;240mt[30m(B[m[32mex[30m(B[mi[38;5;240mt[30m(B[m[32mi[30m(B[mt[31m[1mexi(B[mt[31m[1mt(B[m[32mexit[30m(B[m
+[30m(B[m]0;exit  /home/wolf/Dropbox/Projects-current/jTermReplay/examples[30m(B[m
+[30m(B[m
+Script done on Tue 18 Feb 2014 06:10:40 PM EST
