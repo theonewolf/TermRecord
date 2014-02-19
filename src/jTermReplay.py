@@ -5,8 +5,6 @@
 
 from jinja2 import Template
 
-
-
 from math import ceil
 from mmap import mmap
 from sys import argv
@@ -27,6 +25,7 @@ FOOTER      = r'''}, false);'''
 TEMPLATE    = 'setTimeout(function() {term.write(\'%s\');}, %d);\n'
 
 
+
 def getTiming(timefname):
     timing = None 
     with open(timefname, 'r') as timef:
@@ -42,7 +41,7 @@ def scriptToJS(scriptfname, timing=None):
         offset = 0
         for t in timing:
             data = scriptf.read(t[1]).decode('utf-8').encode('unicode-escape')
-            data = data.replace("'", "\\'") # odd fixup
+            data = data.replace("'", "\\'") # necessary fixup
             offset += t[0]
             ret += TEMPLATE % (data, offset)
     
