@@ -11,7 +11,7 @@ from sys import argv
 HEADER      = r'''window.addEventListener('load', function() {
     var term = new Terminal({
         cols: 80,
-        rows: 24,
+        rows: 30,
         screenKeys: true
     });
 
