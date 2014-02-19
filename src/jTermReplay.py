@@ -3,10 +3,12 @@
 
 
 
-from jinja2 import Template
+from jinja2 import FileSystemLoader, Template
+from jinja2.environment import  Environment
 
 from math import ceil
 from mmap import mmap
+from os.path import basename,dirname
 from sys import argv
 
 
@@ -48,14 +50,18 @@ def scriptToJS(scriptfname, timing=None):
     return ret
 
 def renderTemplate(js, templatename, outputname=None):
-    with open(templatename, 'r') as tmpf:
-        rendered = Template(tmpf.read().decode('utf-8')).render(jscript=js)
+    fsl = FileSystemLoader(dirname(templatename), 'utf-8')
+    e = Environment()
+    e.loader = fsl
 
-        if not outputname:
-            return rendered
+    templatename = basename(templatename)
+    rendered = e.get_template(templatename).render(jscript=js)
 
-        with open(outputname, 'w') as outf:
-            outf.write(rendered)
+    if not outputname:
+        return rendered
+
+    with open(outputname, 'w') as outf:
+        outf.write(rendered)
 
 
 
