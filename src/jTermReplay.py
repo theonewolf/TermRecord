@@ -19,7 +19,7 @@ HEADER      = r'''window.addEventListener('load', function() {
     term.write('\x1b[31m--- Replaying Script ---\x1b[m\r\n');
 '''
 FOOTER      = r'''}, false);'''
-TEMPLATE    = 'term.write(\'%s\');\n'
+TEMPLATE    = 'setTimeout(function() {term.write(\'%s\');}, %d);\n'
 
 
 def getTiming(timefname):
@@ -32,14 +32,14 @@ def getTiming(timefname):
 def scriptToJS(scriptfname, timing=None):
     ret = HEADER
 
-    with open(scriptfname, 'r+b') as scriptf:
-        mm = mmap(scriptf.fileno(), 0)
-        head = mm.readline() # ignore first header line from script file 
-        pos = len(head)
+    with open(scriptfname, 'rb') as scriptf:
+        scriptf.readline() # ignore first header line from script file 
+        offset = 0
         for t in timing:
-            ret += TEMPLATE % (mm[pos : pos + t[1]].encode('string-escape'))
-            pos += t[1]
-        mm.close()
+            data = scriptf.read(t[1]).decode('utf-8').encode('unicode-escape')
+            data = data.replace("'", "\\'") # odd fixup
+            offset += t[0]
+            ret += TEMPLATE % (data, offset)
     
     ret += FOOTER
     return ret
