@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
+
+from jinja2 import Template
 
 
 
@@ -44,12 +49,18 @@ def scriptToJS(scriptfname, timing=None):
     ret += FOOTER
     return ret
 
+def renderTemplate(js, templatename, outputname):
+    with open(templatename, 'rt') as tmpf:
+        with open(outputname, 'wt') as outf:
+            Template(tmpf.read().decode('utf-8')).stream(jscript=js).dump(outf)
 
 
 if __name__ == '__main__':
     argv        =   dict(enumerate(argv))
     scriptfname =   argv.get(1)
     timefname   =   argv.get(2)
+    tmpname     =   argv.get(3)
+    outname     =   argv.get(4)
     timing      =   None
 
     if not scriptfname:
@@ -60,4 +71,7 @@ if __name__ == '__main__':
         timing = getTiming(timefname)
 
     js = scriptToJS(scriptfname, timing)
-    print js
+    if tmpname and outname:
+        renderTemplate(js, tmpname, outname)
+    else:
+        print js
