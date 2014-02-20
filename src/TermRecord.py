@@ -30,6 +30,11 @@ from jinja2 import FileSystemLoader, Template
 from jinja2.environment import  Environment
 
 
+
+DEFAULT_TEMPLATE    =   '/usr/share/TermRecord/templates/static.jinja2'
+
+
+
 # http://blog.taz.net.au/2012/04/09/getting-the-terminal-size-in-python/
 def probeDimensions(fd=1):
     """
@@ -117,7 +122,12 @@ if __name__ == '__main__':
     argparser.add_argument('-d', '--dimensions', type=int,
                            metavar=('h','w'), nargs=2,
                            help='dimensions of terminal', required=False)
+    argparser.add_argument('--json',
+                           help='output only JSON', required=False)
+    argparser.add_argument('--js',
+                           help='output only JavaScript', required=False)
     argparser.add_argument('-m', '--template-file', type=str,
+                           default=DEFAULT_TEMPLATE,
                            help='file to use as HTML template', required=False)
     argparser.add_argument('-o', '--output-file', type=FileType('w'),
                            help='file to output HTML to', required=False)
@@ -134,6 +144,8 @@ if __name__ == '__main__':
     scriptf     =   ns.script_file
     outf        =   ns.output_file
     timef       =   ns.timing_file 
+    json_only   =   ns.json
+    js_only     =   ns.js
 
     if (scriptf and not timef) or (timef and not scriptf):
         parser.error('Both SCRIPT_FILE and TIMING_FILE have to be specified' +
@@ -148,9 +160,12 @@ if __name__ == '__main__':
 
     timing = getTiming(timef)
     json = scriptToJSON(scriptf, timing)
-    if tmpname and outf:
+
+    if json_only:
+        print json
+    elif js_only:
+        print 'JS ONLY PLEASE IMPLEMENT ME.'
+    elif tmpname and outf:
         renderTemplate(json, dimensions, tmpname, outf)
     elif tmpname:
         print renderTemplate(json, tmpname) 
-    else:
-        print json
