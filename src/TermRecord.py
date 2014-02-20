@@ -9,7 +9,7 @@
 # browser.                                                                   #
 #                                                                            #
 #                                                                            #
-#   Authors: Wolfgang Richter <wolf@cs.cmu.edu>                              #
+#   Authors: Wolfgang Richter <wolfgang.richter@gmail.com>                   #
 #                                                                            #
 #                                                                            #
 #   Copyright 2014 Wolfgang Richter and licensed under the MIT License.      #
