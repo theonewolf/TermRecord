@@ -10,12 +10,14 @@ dynamic: ${DYNAMIC_OBJS}
 static: ${STATIC_OBJS}
 
 examples/%-dynamic.html: ${DYN_DEP} examples/%.time examples/%.script
-	src/jTermReplay.py examples/${*F}.script examples/${*F}.time \
-				       templates/dynamic.jinja2 examples/${*F}-dynamic.html
+	src/jTermReplay.py -s examples/${*F}.script -t examples/${*F}.time \
+				       -m templates/dynamic.jinja2 \
+					   -o examples/${*F}-dynamic.html
 
 examples/%-static.html: ${STATIC_DEP} examples/%.time examples/%.script
-	src/jTermReplay.py examples/${*F}.script examples/${*F}.time \
-				       templates/static.jinja2 examples/${*F}-static.html
+	src/jTermReplay.py -s examples/${*F}.script -t examples/${*F}.time \
+				       -m templates/static.jinja2 \
+					   -o examples/${*F}-static.html
 
 clean:
 	rm ${DYNAMIC_OBJS} ${STATIC_OBJS} 

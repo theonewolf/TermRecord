@@ -21,25 +21,26 @@
 from jinja2 import FileSystemLoader, Template
 from jinja2.environment import  Environment
 
+from argparse import ArgumentParser, FileType
+from contextlib import closing
 from json import dumps
 from math import ceil
 from mmap import mmap
 from os.path import basename,dirname
-from sys import argv
 
 
 
-def getTiming(timefname):
+def getTiming(timef):
     timing = None 
-    with open(timefname, 'r') as timef:
+    with closing(timef):
         timing = [l.strip().split(' ') for l in timef]
         timing = [(int(ceil(float(r[0]) * 1000)), int(r[1])) for r in timing]
     return timing
 
-def scriptToJSON(scriptfname, timing=None):
+def scriptToJSON(scriptf, timing=None):
     ret = []
 
-    with open(scriptfname, 'rb') as scriptf:
+    with closing(scriptf):
         scriptf.readline() # ignore first header line from script file 
         offset = 0
         for t in timing:
@@ -49,7 +50,7 @@ def scriptToJSON(scriptfname, timing=None):
             ret.append((data, offset))
     return dumps(ret)
 
-def renderTemplate(json, templatename, outputname=None):
+def renderTemplate(json, templatename, outf=None):
     fsl = FileSystemLoader(dirname(templatename), 'utf-8')
     e = Environment()
     e.loader = fsl
@@ -57,33 +58,45 @@ def renderTemplate(json, templatename, outputname=None):
     templatename = basename(templatename)
     rendered = e.get_template(templatename).render(json=json)
 
-    if not outputname:
+    if not outf:
         return rendered
 
-    with open(outputname, 'w') as outf:
+    with closing(outf):
         outf.write(rendered)
 
 
 
 if __name__ == '__main__':
-    argv        =   dict(enumerate(argv))
-    scriptfname =   argv.get(1)
-    timefname   =   argv.get(2)
-    tmpname     =   argv.get(3) # optional
-    outname     =   argv.get(4) # optional
-    timing      =   None
+    argparser   =   ArgumentParser(description=
+                                        'Stores terminal sessions into HTML.')
 
-    if not scriptfname:
-        print 'Script file name needed.'
+    argparser.add_argument('-s', '--script-file', type=FileType('r'),
+                           help='script file to parse', required=False)
+    argparser.add_argument('-t', '--timing-file', type=FileType('r'),
+                           help='timing file to parse', required=False)
+    argparser.add_argument('-m', '--template-file', type=str,
+                           help='file to use as HTML template', required=False)
+    argparser.add_argument('-o', '--output-file', type=FileType('w'),
+                           help='file to output HTML to', required=False)
+
+    ns = argparser.parse_args()
+
+    scriptf     =   ns.script_file
+    timef       =   ns.timing_file 
+    tmpname     =   ns.template_file # optional
+    outf        =   ns.output_file   # optional
+
+    if (scriptf and not timef) or (timef and not scriptf):
+        parser.error('Both SCRIPT_FILE and TIMING_FILE have to be specified' +
+                     'together.')
         exit(1)
     
-    if timefname:
-        timing = getTiming(timefname)
-
-    json = scriptToJSON(scriptfname, timing)
-    if tmpname and outname:
-        renderTemplate(json, tmpname, outname)
-    elif tmpname:
-        print renderTemplate(json, tmpname) 
-    else:
-        print js
+    if scriptf and timef:
+        timing = getTiming(timef)
+        json = scriptToJSON(scriptf, timing)
+        if tmpname and outf:
+            renderTemplate(json, tmpname, outf)
+        elif tmpname:
+            print renderTemplate(json, tmpname) 
+        else:
+            print js
