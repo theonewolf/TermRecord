@@ -113,31 +113,36 @@ if __name__ == '__main__':
     argparser   =   ArgumentParser(description=
                                         'Stores terminal sessions into HTML.')
 
-    argparser.add_argument('-s', '--script-file', type=FileType('r'),
-                           help='script file to parse', required=False)
-    argparser.add_argument('-t', '--timing-file', type=FileType('r'),
-                           help='timing file to parse', required=False)
+    argparser.add_argument('-c', '--command', type=str,
+                           help='run a command and quit', required=False)
+    argparser.add_argument('-d', '--dimensions', type=int,
+                           metavar=('h','w'), nargs=2,
+                           help='dimensions of terminal', required=False)
     argparser.add_argument('-m', '--template-file', type=str,
                            help='file to use as HTML template', required=False)
     argparser.add_argument('-o', '--output-file', type=FileType('w'),
                            help='file to output HTML to', required=False)
-    argparser.add_argument('-c', '--command', type=str,
-                           help='run a command and quit', required=False)
+    argparser.add_argument('-s', '--script-file', type=FileType('r'),
+                           help='script file to parse', required=False)
+    argparser.add_argument('-t', '--timing-file', type=FileType('r'),
+                           help='timing file to parse', required=False)
 
     ns = argparser.parse_args()
 
+    command     =   ns.command
+    dimensions  =   ns.dimensions
+    tmpname     =   ns.template_file
     scriptf     =   ns.script_file
+    outf        =   ns.output_file
     timef       =   ns.timing_file 
-    tmpname     =   ns.template_file # optional
-    outf        =   ns.output_file   # optional
-    command     =   ns.command       # optional
 
     if (scriptf and not timef) or (timef and not scriptf):
         parser.error('Both SCRIPT_FILE and TIMING_FILE have to be specified' +
                      'together.')
         exit(1)
    
-    dimensions = probeDimensions() if not scriptf else (24,80)
+    if not dimensions:
+        dimensions = probeDimensions() if not scriptf else (24,80)
 
     if not scriptf:
         scriptf,timef = runScript(command)
