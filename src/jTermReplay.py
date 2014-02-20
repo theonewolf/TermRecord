@@ -18,17 +18,50 @@
 
 
 
-from jinja2 import FileSystemLoader, Template
-from jinja2.environment import  Environment
-
 from argparse import ArgumentParser, FileType
 from contextlib import closing
 from json import dumps
 from math import ceil
-from mmap import mmap
 from os.path import basename,dirname
+from subprocess import Popen
+from tempfile import NamedTemporaryFile
+
+from jinja2 import FileSystemLoader, Template
+from jinja2.environment import  Environment
 
 
+# http://blog.taz.net.au/2012/04/09/getting-the-terminal-size-in-python/
+def probeDimensions(fd=1):
+    """
+    Returns height and width of current terminal. First tries to get
+    size via termios.TIOCGWINSZ, then from environment. Defaults to 25
+    lines x 80 columns if both methods fail.
+
+    :param fd: file descriptor (default: 1=stdout)
+    """
+    try:
+        import fcntl, termios, struct
+        hw = struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
+    except:
+        try:
+            hw = (os.environ['LINES'], os.environ['COLUMNS'])
+        except:  
+            hw = (25, 80)
+
+    return hw
+
+def runScript():
+    timingfname = None
+    scriptfname = None
+
+    with NamedTemporaryFile(delete=False) as timingf:
+        with NamedTemporaryFile(delete=False) as scriptf:
+            timingfname = timingf.name 
+            scriptfname = scriptf.name
+
+    proc = Popen(['script', '-t%s' % timingfname, scriptfname])
+    proc.wait()
+    return open(scriptfname, 'r'), open(timingfname, 'r') 
 
 def getTiming(timef):
     timing = None 
@@ -50,13 +83,14 @@ def scriptToJSON(scriptf, timing=None):
             ret.append((data, offset))
     return dumps(ret)
 
-def renderTemplate(json, templatename, outf=None):
+def renderTemplate(json, dimensions, templatename, outfname=None):
     fsl = FileSystemLoader(dirname(templatename), 'utf-8')
     e = Environment()
     e.loader = fsl
 
     templatename = basename(templatename)
-    rendered = e.get_template(templatename).render(json=json)
+    rendered = e.get_template(templatename).render(json=json,
+                                                   dimensions=dimensions)
 
     if not outf:
         return rendered
@@ -90,13 +124,17 @@ if __name__ == '__main__':
         parser.error('Both SCRIPT_FILE and TIMING_FILE have to be specified' +
                      'together.')
         exit(1)
-    
-    if scriptf and timef:
-        timing = getTiming(timef)
-        json = scriptToJSON(scriptf, timing)
-        if tmpname and outf:
-            renderTemplate(json, tmpname, outf)
-        elif tmpname:
-            print renderTemplate(json, tmpname) 
-        else:
-            print js
+   
+    dimensions = probeDimensions() if not scriptf else (80,24)
+
+    if not scriptf:
+        scriptf,timef = runScript()
+
+    timing = getTiming(timef)
+    json = scriptToJSON(scriptf, timing)
+    if tmpname and outf:
+        renderTemplate(json, dimensions, tmpname, outf)
+    elif tmpname:
+        print renderTemplate(json, tmpname) 
+    else:
+        print js
