@@ -50,16 +50,25 @@ def probeDimensions(fd=1):
 
     return hw
 
-def runScript():
+def runScript(command=None):
     timingfname = None
     scriptfname = None
+    CMD = ['script']
 
     with NamedTemporaryFile(delete=False) as timingf:
         with NamedTemporaryFile(delete=False) as scriptf:
             timingfname = timingf.name 
             scriptfname = scriptf.name
 
-    proc = Popen(['script', '-t%s' % timingfname, scriptfname])
+    CMD.append('-t%s' % timingfname)
+
+    if command:
+        CMD.append('-c')
+        CMD.append(command)
+
+    CMD.append(scriptfname)
+
+    proc = Popen(CMD)
     proc.wait()
     return open(scriptfname, 'r'), open(timingfname, 'r') 
 
@@ -112,6 +121,8 @@ if __name__ == '__main__':
                            help='file to use as HTML template', required=False)
     argparser.add_argument('-o', '--output-file', type=FileType('w'),
                            help='file to output HTML to', required=False)
+    argparser.add_argument('-c', '--command', type=str,
+                           help='run a command and quit', required=False)
 
     ns = argparser.parse_args()
 
@@ -119,6 +130,7 @@ if __name__ == '__main__':
     timef       =   ns.timing_file 
     tmpname     =   ns.template_file # optional
     outf        =   ns.output_file   # optional
+    command     =   ns.command       # optional
 
     if (scriptf and not timef) or (timef and not scriptf):
         parser.error('Both SCRIPT_FILE and TIMING_FILE have to be specified' +
@@ -128,7 +140,7 @@ if __name__ == '__main__':
     dimensions = probeDimensions() if not scriptf else (24,80)
 
     if not scriptf:
-        scriptf,timef = runScript()
+        scriptf,timef = runScript(command)
 
     timing = getTiming(timef)
     json = scriptToJSON(scriptf, timing)
