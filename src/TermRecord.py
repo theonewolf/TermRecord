@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ##############################################################################
-# jTermReplay.py                                                             #
+# TermRecord.py                                                              #
 #                                                                            #
 # This file can either run the 'script' command as a wrapper, or parse its   #
 # output with timing information.  It produces self-contained or dynamic     #
@@ -46,7 +46,7 @@ def probeDimensions(fd=1):
         try:
             hw = (os.environ['LINES'], os.environ['COLUMNS'])
         except:  
-            hw = (25, 80)
+            hw = (24, 80)
 
     return hw
 
@@ -125,7 +125,7 @@ if __name__ == '__main__':
                      'together.')
         exit(1)
    
-    dimensions = probeDimensions() if not scriptf else (80,24)
+    dimensions = probeDimensions() if not scriptf else (24,80)
 
     if not scriptf:
         scriptf,timef = runScript()
