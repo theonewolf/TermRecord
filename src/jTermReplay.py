@@ -1,5 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+##############################################################################
+# jTermReplay.py                                                             #
+#                                                                            #
+# This file can either run the 'script' command as a wrapper, or parse its   #
+# output with timing information.  It produces self-contained or dynamic     #
+# HTML files capable of replaying the terminal session with just a modern    #
+# browser.                                                                   #
+#                                                                            #
+#                                                                            #
+#   Authors: Wolfgang Richter <wolf@cs.cmu.edu>                              #
+#                                                                            #
+#                                                                            #
+#   Copyright 2014 Wolfgang Richter and licensed under the MIT License.      #
+#                                                                            #
+##############################################################################
 
 
 
