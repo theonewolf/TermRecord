@@ -87,7 +87,6 @@ def scriptToJSON(scriptf, timing=None):
         offset = 0
         for t in timing:
             data = scriptf.read(t[1]).decode('utf-8')
-            data = data.replace("'", "\\'") # necessary fixup
             offset += t[0]
             ret.append((data, offset))
     return dumps(ret)
