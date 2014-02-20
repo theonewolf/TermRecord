@@ -137,4 +137,4 @@ if __name__ == '__main__':
     elif tmpname:
         print renderTemplate(json, tmpname) 
     else:
-        print js
+        print json
