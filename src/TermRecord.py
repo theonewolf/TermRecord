@@ -168,4 +168,4 @@ if __name__ == '__main__':
     elif tmpname and outf:
         renderTemplate(json, dimensions, tmpname, outf)
     elif tmpname:
-        print renderTemplate(json, tmpname) 
+        print renderTemplate(json, dimensions, tmpname)
