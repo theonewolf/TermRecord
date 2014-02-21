@@ -1,0 +1,48 @@
+Script started on Fri 21 Feb 2014 12:58:43 PM EST
+]0;fish  /tmp/hello[30m(B[mWelcome to fish, the friendly interactive shell
+Type [32mhelp[30m(B[m for instructions on how to use fish
+]0;fish  /tmp/hello[30m(B[m[38;5;245m⏎[0m                                                                                                              [1m[31m➜ [1m[36mhello[30m(B[m>[Kp[31m[1mp(B[my[38;5;240mthon[30m(B[m[31m[1my(B[mt[38;5;240mhon[30m(B[m[31m[1mt(B[mh[38;5;240mon[30m(B[m[31m[1mh(B[mo[38;5;240mn[30m(B[m[31m[1mo(B[mn[31m[1mn(B[m[32mpython[30m(B[m
+[30m(B[m]0;python  /tmp/hello[30m(B[mPython 2.7.3 (default, Sep 26 2013, 20:03:06) 
+[GCC 4.6.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from time import sleep
+>>> with open('hello_worlds.txt') as f:
+...     for line in f:
+...             print line
+...             sleep(1)
+... 
+বিশ্ব হ্যালো!
+
+विश्व नमस्कार!
+
+你好世界！
+
+saluton mondo!
+
+bonjour tout le monde!
+
+hallo welt!
+
+dia duit Domhanda!
+
+Ciao mondo!
+
+世界こんにちは！
+
+세계 안녕하세요!
+
+Witaj świecie!
+
+Olá mundo!
+
+Привет мир!
+
+¡Hola Mundo!
+
+Hej världen!
+
+>>> exit()
+]0;fish  /tmp/hello[30m(B[m[38;5;245m⏎[0m                                                                                                              [1m[31m➜ [1m[36mhello[30m(B[m>[Ke[31m[1me(B[mx[38;5;240mit[30m(B[m[31m[1mx(B[mi[38;5;240mt[30m(B[m[32mex[30m(B[mi[38;5;240mt[30m(B[m[32mi[30m(B[mt[31m[1mexi(B[mt[31m[1mt(B[m[32mexit[30m(B[m
+[30m(B[m]0;exit  /tmp/hello[30m(B[m
+[30m(B[m
+Script done on Fri 21 Feb 2014 12:59:39 PM EST

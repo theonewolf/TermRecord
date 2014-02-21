@@ -1,7 +1,8 @@
 DYNAMIC_OBJS	=	examples/figlet-dynamic.html examples/gcc-dynamic.html \
-				    examples/htop-dynamic.html
+				    examples/hello-dynamic.html \
+					examples/htop-dynamic.html
 STATIC_OBJS		=	examples/figlet-static.html examples/gcc-static.html \
-				    examples/htop-static.html
+				    examples/hello-static.html examples/htop-static.html
 DYN_DEP			=	templates/dynamic.jinja2 templates/base.jinja2
 STATIC_DEP		=	templates/static.jinja2 templates/base.jinja2
 
