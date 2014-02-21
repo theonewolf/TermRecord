@@ -12,11 +12,13 @@ static: ${STATIC_OBJS}
 examples/%-dynamic.html: ${DYN_DEP} examples/%.time examples/%.script
 	src/TermRecord.py -s examples/${*F}.script -t examples/${*F}.time \
 				       -m templates/dynamic.jinja2 \
+					   -d 30 80 \
 					   -o examples/${*F}-dynamic.html
 
 examples/%-static.html: ${STATIC_DEP} examples/%.time examples/%.script
 	src/TermRecord.py -s examples/${*F}.script -t examples/${*F}.time \
 				       -m templates/static.jinja2 \
+					   -d 30 80 \
 					   -o examples/${*F}-static.html
 
 clean:
