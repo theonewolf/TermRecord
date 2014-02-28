@@ -25,7 +25,7 @@ a variety of shell sessions:
 
 Just getting started? The defaults are probably fine for you, just specify an
 output HTML file and go: `TermRecord -o mysession.html`.  For more complex
-operations, checkout `TermRecord --help`.
+operations checkout `TermRecord --help`.
 
 There are three main modes of operation: (1) wrap the `script` program and dump
 JSON to stdout, (2) wrap the `script` program and dump HTML to stdout, (3)
