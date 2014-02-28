@@ -21,30 +21,6 @@ a variety of shell sessions:
 - [Using gcc and vim](http://theonewolf.github.io/TermRecord/gcc-static.html)
 - [Using htop](http://theonewolf.github.io/TermRecord/htop-static.html)
 
-## Usage
-
-Just getting started? The defaults are probably fine for you, just specify an
-output HTML file and go: `TermRecord -o mysession.html`.  For more complex
-operations checkout `TermRecord --help`.
-
-There are three main modes of operation: (1) wrap the `script` program and dump
-JSON to stdout, (2) wrap the `script` program and dump HTML to stdout, (3)
-parse `script` log files with timing information saving output (JSON or HTML)
-to a file or dumping to stdout. The last mode is good for converting any old
-script sessions to HTML or JSON.
-
-### Special Considerations
-
-`TermRecord` assumes that during a captured session you do not change the
-terminal's window size.  This is usually a safe assumption.  However, if you
-change the terminal's window size to larger dimensions, rendering in the HTML
-may get messed up.  If you resize to smaller dimensions, you should be safe.
-
-We could try and trap window resize events when wrapping `script`, but it is
-difficult to merge the timing of that event with the timing information
-recorded by `script`.  Thus, we punt this difficulty onto you.  Don't resize
-your windows ;-)
-
 ## Why?
 
 How do you **share your command line adventures** with your friends? For me,
@@ -77,6 +53,31 @@ timing information and can create a self-contained HTML file which replays the
 recorded session without needing to load anything from the web. These term
 sessions can be emailed and viewed on practically any device (tested on things
 like iPads etc.). Basically, the consumer only needs a modern browser.
+
+## Usage
+
+Just getting started? The defaults are probably fine for you, just specify an
+output HTML file and go: `TermRecord -o mysession.html`.  For more complex
+operations checkout `TermRecord --help`.
+
+There are three main modes of operation: (1) wrap the `script` program and dump
+JSON to stdout, (2) wrap the `script` program and dump HTML to stdout, (3)
+parse `script` log files with timing information saving output (JSON or HTML)
+to a file or dumping to stdout. The last mode is good for converting any old
+script sessions to HTML or JSON.
+
+### Special Considerations
+
+`TermRecord` assumes that during a captured session you do not change the
+terminal's window size.  This is usually a safe assumption.  However, if you
+change the terminal's window size to larger dimensions, rendering in the HTML
+may get messed up.  If you resize to smaller dimensions, you should be safe.
+
+We could try and trap window resize events when wrapping `script`, but it is
+difficult to merge the timing of that event with the timing information
+recorded by `script`.  Thus, we punt this difficulty onto you.  Don't resize
+your windows ;-)
+
 
 ## Dependencies
 
