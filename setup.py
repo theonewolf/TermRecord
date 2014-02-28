@@ -25,6 +25,7 @@ Super Easy to Use
 `````````````````
 
 .. code:: bash
+
     $ TermRecord -o /tmp/test.html
     $ # do whatever you want, once you exit your shell:
     $ google-chrome /tmp/test.html
