@@ -23,7 +23,9 @@ from contextlib import closing
 from json import dumps
 from math import ceil
 from os.path import basename,dirname
+from struct import unpack
 from subprocess import Popen
+from sys import platform
 from tempfile import NamedTemporaryFile
 
 from jinja2 import FileSystemLoader, Template
@@ -55,6 +57,10 @@ def probeDimensions(fd=1):
 
     return hw
 
+# http://stackoverflow.com/a/8220141/3362361
+def testOSX():
+    return platform == 'darwin' 
+
 def runScript(command=None):
     timingfname = None
     scriptfname = None
@@ -77,6 +83,23 @@ def runScript(command=None):
     proc.wait()
     return open(scriptfname, 'r'), open(timingfname, 'r') 
 
+def runTtyrec(command=None):
+    scriptfname = None
+    CMD = ['ttyrec']
+
+    with NamedTemporaryFile(delete=False) as scriptf:
+        scriptfname = scriptf.name
+
+    if command:
+        CMD.append('-e')
+        CMD.append(command)
+
+    CMD.append(scriptfname)
+
+    proc = Popen(CMD)
+    proc.wait()
+    return open(scriptfname, 'r') 
+
 def getTiming(timef):
     timing = None 
     with closing(timef):
@@ -94,6 +117,24 @@ def scriptToJSON(scriptf, timing=None):
             data = scriptf.read(t[1]).decode('utf-8')
             offset += t[0]
             ret.append((data, offset))
+    return dumps(ret)
+
+def parseTtyrec(scriptf):
+    pos = 0
+    offset = 0
+    oldtime = 0
+    ret = []
+
+    with closing(scriptf):
+        data = scriptf.read()
+        while pos < len(data):
+            secs,usecs,amount = unpack('iii', data[pos:pos+12])
+            pos += 12
+            timing = int(ceil(secs * 1000 + float(usecs) / 1000))
+            if oldtime: offset += timing - oldtime
+            oldtime = timing
+            ret.append((data[pos:pos+amount].decode('utf-8'), offset))
+            pos += amount
     return dumps(ret)
 
 def renderTemplate(json, dimensions, templatename, outfname=None):
@@ -117,6 +158,8 @@ if __name__ == '__main__':
     argparser   =   ArgumentParser(description=
                                         'Stores terminal sessions into HTML.')
 
+    argparser.add_argument('-b', '--backend', type=str, default='script',
+                           help='use either script or ttyrec', required=False)
     argparser.add_argument('-c', '--command', type=str,
                            help='run a command and quit', required=False)
     argparser.add_argument('-d', '--dimensions', type=int,
@@ -138,6 +181,7 @@ if __name__ == '__main__':
 
     ns = argparser.parse_args()
 
+    backend     =   ns.backend
     command     =   ns.command
     dimensions  =   ns.dimensions
     tmpname     =   ns.template_file
@@ -146,10 +190,10 @@ if __name__ == '__main__':
     timef       =   ns.timing_file 
     json_only   =   ns.json
     js_only     =   ns.js
+    isOSX       =   testOSX()
 
-    if (scriptf and not timef) or (timef and not scriptf):
-        parser.error('Both SCRIPT_FILE and TIMING_FILE have to be specified' +
-                     'together.')
+    if backend != 'ttyrec' and ((scriptf and not timef) or \
+                                (timef and not scriptf)):
         argparser.error('Both SCRIPT_FILE and TIMING_FILE have to be ' +
                         'specified together.')
         exit(1)
@@ -158,10 +202,16 @@ if __name__ == '__main__':
         dimensions = probeDimensions() if not scriptf else (24,80)
 
     if not scriptf:
-        scriptf,timef = runScript(command)
+        if isOSX or backend == 'ttyrec':
+            scriptf = runTtyrec(command)
+        else:
+            scriptf,timef = runScript(command)
 
-    timing = getTiming(timef)
-    json = scriptToJSON(scriptf, timing)
+    if isOSX or backend == 'ttyrec':
+        json = parseTtyrec(scriptf)
+    else:
+        timing = getTiming(timef)
+        json = scriptToJSON(scriptf, timing)
 
     if json_only:
         print json

@@ -22,5 +22,11 @@ examples/%-static.html: ${STATIC_DEP} examples/%.time examples/%.script
 				   -d 30 80 \
 				   -o examples/${*F}-static.html
 
+ttyrec:
+	src/TermRecord -s examples/test.ttyrec -b ttyrec \
+				   -m templates/static.jinja2 \
+				   -d 30 500 \
+				   -o examples/ttyrec-static.html
+
 clean:
 	rm ${DYNAMIC_OBJS} ${STATIC_OBJS} 
