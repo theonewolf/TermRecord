@@ -150,6 +150,8 @@ if __name__ == '__main__':
     if (scriptf and not timef) or (timef and not scriptf):
         parser.error('Both SCRIPT_FILE and TIMING_FILE have to be specified' +
                      'together.')
+        argparser.error('Both SCRIPT_FILE and TIMING_FILE have to be ' +
+                        'specified together.')
         exit(1)
    
     if not dimensions:
