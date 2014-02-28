@@ -31,7 +31,7 @@ from jinja2.environment import  Environment
 
 
 
-DEFAULT_TEMPLATE    =   '/usr/share/TermRecord/templates/static.jinja2'
+DEFAULT_TEMPLATE    =   '/usr/local/share/TermRecord/templates/static.jinja2'
 
 
 
