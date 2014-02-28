@@ -3,13 +3,17 @@
 TermRecord is **a simple terminal session recorder** with easy-to-share
 **self-contained HTML** output!
 
-Mac OS X support coming soon.
-
 ## Installation
 
-```python
+```bash
 sudo pip install TermRecord
 TermRecord -o /tmp/session.html
+```
+
+On Mac OS X you will need `ttyrec`:
+
+```bash
+sudo brew install ttyrec
 ```
 
 ## Demos
