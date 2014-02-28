@@ -1,3 +1,5 @@
 *.swp
 *.html
 examples/term.js
+dist
+TermRecord.egg-info
