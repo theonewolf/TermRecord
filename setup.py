@@ -44,7 +44,7 @@ from setuptools import setup
 
 setup(
     name='TermRecord',
-    version='1.0.1',
+    version='1.1.0',
     url='http://github.com/theonewolf/TermRecord',
     license='MIT',
     author='Wolfgang Richter',
