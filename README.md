@@ -3,6 +3,8 @@
 TermRecord is **a simple terminal session recorder** with easy-to-share
 **self-contained HTML** output!
 
+Mac OS X support coming soon.
+
 ## Installation
 
 ```python
@@ -83,6 +85,8 @@ your windows ;-)
 
 TermRecord depends on three things currently:
 
+0. A version of the `script` command supporting recording of timing information
+   into a file (the `-t` option on modern Linux distributions)
 1. [term.js](https://github.com/chjj/term.js/) -- minified
    ([YUI](http://yui.github.io/yuicompressor/)), and embedded in the static
    template; MIT License
