@@ -1,0 +1,2 @@
+include src/TermRecord
+include templates/*.jinja2
