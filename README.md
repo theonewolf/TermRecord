@@ -4,7 +4,7 @@
 
 ```python
 sudo pip install TermRecord
-TermRecord -m /usr/share/TermRecord/templates/static.jinja2 -o session-static.html```
+TermRecord -o /tmp/session.html```
 
 ## Usage
 
