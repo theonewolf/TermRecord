@@ -10,10 +10,12 @@ sudo pip install TermRecord
 TermRecord -o /tmp/session.html
 ```
 
-On Mac OS X you will need `ttyrec`:
+On Mac OS X you will need `ttyrec` as well:
 
 ```bash
 sudo brew install ttyrec
+sudo easy_install pip # only if you don't have pip yet
+sudo pip install TermRecord
 ```
 
 ## Demos
@@ -90,7 +92,7 @@ your windows ;-)
 TermRecord depends on three things currently:
 
 0. A version of the `script` command supporting recording of timing information
-   into a file (the `-t` option on modern Linux distributions)
+   into a file (the `-t` option on modern Linux distributions) or `ttyrec`
 1. [term.js](https://github.com/chjj/term.js/) -- minified
    ([YUI](http://yui.github.io/yuicompressor/)), and embedded in the static
    template; MIT License
