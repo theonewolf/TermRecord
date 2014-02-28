@@ -4,7 +4,8 @@
 
 ```python
 sudo pip install TermRecord
-TermRecord -o /tmp/session.html```
+TermRecord -o /tmp/session.html
+```
 
 ## Usage
 
