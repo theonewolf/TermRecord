@@ -14,9 +14,16 @@ On Mac OS X you will need `ttyrec` as well:
 
 ```bash
 sudo brew install ttyrec
-sudo easy_install pip # only if you don't have pip yet
-sudo pip install TermRecord
 ```
+
+If you want to run from source and not install:
+
+```bash
+git clone https://github.com/theonewolf/TermRecord.git
+src/TermRecord -o /tmp/test.html -m templates/static.jinja2
+```
+
+replacing `/tmp/test.html` with whatever you want the output file to be named.
 
 ## Demos
 
