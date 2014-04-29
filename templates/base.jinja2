@@ -5,8 +5,9 @@
     <body>
         <input type="button" value="Play/Pause" onclick="pause(false);" /> 
         <input type="button" value="Restart" onclick="restart(1);" /> 
-        00:00:00 <input id="scrubber" type="range" value="0" min=0 max=100
-                  onmousedown="pause(true);" onmouseup="scrub();" />
+        <span id="beforeScrubberText"></span>
+        <input id="scrubber" type="range" value="0" min=0 max=100
+               onmousedown="pause(true);" onmouseup="scrub();" />
         <span id="afterScrubberText"></span>
         -5x <input id="speed" type="range" value="0" min=-5 max=5
                onmouseup="setSpeed();" /> +5x
@@ -20,26 +21,33 @@
             var pos = 0;
             var timer;
 
+            // Thanks http://stackoverflow.com/a/2998822
+            function zeroPad(num, size) {
+                var s = "0" + num;
+                return s.substr(s.length-size);
+            }
+
             function scrub() {
                setPercent = document.getElementById('scrubber').value;
                time = (setPercent / 100) * totalTime;
                restart(time); 
             }
 
-            function buildTimeString() {
-                millis  = data[data.length - 1][1];
-                totalTime = millis;
-                hours   = Math.floor(millis / (1000 * 60 * 60));
+            function buildTimeString(millis) {
+                hours   = zeroPad(Math.floor(millis / (1000 * 60 * 60)), 2);
                 millis -= hours * (1000 * 60 * 60)
-                minutes = Math.floor(millis / (1000 * 60));
+                minutes = zeroPad(Math.floor(millis / (1000 * 60)), 2);
                 millis -= minutes * (1000 * 60);
-                seconds = Math.floor(millis / 1000);
+                seconds = zeroPad(Math.floor(millis / 1000), 2);
                 return hours + ':' + minutes + ':' + seconds;
             }
 
             function advance() {
                 document.getElementById('scrubber').value =
                                            Math.ceil((time / totalTime) * 100);
+                timestr = buildTimeString(time);
+                document.getElementById("beforeScrubberText").innerHTML = 
+                                                                       timestr;
                 for (; pos < data.length; pos++) {
                     if (data[pos][1] <= time) {
                         term.write(data[pos][0]);
@@ -93,8 +101,9 @@
                                         rows: {{ dimensions[0] }},
                                         screenKeys: true
                                     });
-            timestr = buildTimeString();
-            document.getElementById("afterScrubberText").innerHTML=timestr;
+            totalTime = data[data.length - 1][1];
+            timestr = buildTimeString(totalTime);
+            document.getElementById("afterScrubberText").innerHTML = timestr;
             term.open(document.body);
             timer = setInterval(advance, TICK);
             </script>
