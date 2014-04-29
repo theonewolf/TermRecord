@@ -34,6 +34,7 @@ from jinja2.environment import  Environment
 
 
 DEFAULT_TEMPLATE    =   '/usr/local/share/TermRecord/templates/static.jinja2'
+TTYREC              =   'ttyrec'
 
 
 
@@ -159,6 +160,7 @@ if __name__ == '__main__':
                                         'Stores terminal sessions into HTML.')
 
     argparser.add_argument('-b', '--backend', type=str, default='script',
+                           choices=['script', 'ttyrec'], 
                            help='use either script or ttyrec', required=False)
     argparser.add_argument('-c', '--command', type=str,
                            help='run a command and quit', required=False)
@@ -194,11 +196,14 @@ if __name__ == '__main__':
     js_only     =   ns.js
     isOSX       =   testOSX()
 
-    if backend != 'ttyrec' and ((scriptf and not timef) or \
-                                (timef and not scriptf)):
+    if backend != TTYREC and ((scriptf and not timef) or \
+                              (timef and not scriptf)):
         argparser.error('Both SCRIPT_FILE and TIMING_FILE have to be ' +
                         'specified together.')
         exit(1)
+
+    if isOSX and not backend:
+        backend = TTYREC 
    
     if not json_only and not js_only and tmpname and not exists(tmpname):
         stderr.write('Error: Template ("%s") does not exist.\n' % (tmpname))
@@ -210,12 +215,12 @@ if __name__ == '__main__':
         dimensions = probeDimensions() if not scriptf else (24,80)
 
     if not scriptf:
-        if isOSX or backend == 'ttyrec':
+        if backend == TTYREC:
             scriptf = runTtyrec(command)
         else:
             scriptf,timef = runScript(command)
 
-    if isOSX or backend == 'ttyrec':
+    if backend == TTYREC:
         json = parseTtyrec(scriptf)
     else:
         timing = getTiming(timef)
