@@ -166,9 +166,11 @@ if __name__ == '__main__':
                            metavar=('h','w'), nargs=2,
                            help='dimensions of terminal', required=False)
     argparser.add_argument('--json',
-                           help='output only JSON', required=False)
+                           help='output only JSON', action='store_true',
+                           required=False)
     argparser.add_argument('--js',
-                           help='output only JavaScript', required=False)
+                           help='output only JavaScript', action='store_true',
+                           required=False)
     argparser.add_argument('-m', '--template-file', type=str,
                            default=DEFAULT_TEMPLATE,
                            help='file to use as HTML template', required=False)
@@ -198,7 +200,7 @@ if __name__ == '__main__':
                         'specified together.')
         exit(1)
    
-    if tmpname and not exists(tmpname):
+    if not json_only and not js_only and tmpname and not exists(tmpname):
         stderr.write('Error: Template ("%s") does not exist.\n' % (tmpname))
         stderr.write('If you only wanted JSON output, use "--json"\n')
         stderr.write('If you only wanted JavaScript output, use "--js"\n')
