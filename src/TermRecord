@@ -25,7 +25,7 @@ from math import ceil
 from os.path import basename, dirname, exists
 from struct import unpack
 from subprocess import Popen
-from sys import platform, stderr
+from sys import platform, stderr, stdout
 from tempfile import NamedTemporaryFile
 
 from jinja2 import FileSystemLoader, Template
@@ -61,6 +61,15 @@ def probeDimensions(fd=1):
 # http://stackoverflow.com/a/8220141/3362361
 def testOSX():
     return platform == 'darwin' 
+
+def escapeString(string):
+    try:
+        string = string.decode(stdout.encoding).encode('unicode_escape')
+        string = string.replace("'", "\\'")
+        string = '\'' + string + '\''
+    except:
+        string = '\'' + string.encode('string_escape') + '\''
+    return string
 
 def runScript(command=None):
     timingfname = None
@@ -115,7 +124,7 @@ def scriptToJSON(scriptf, timing=None):
         scriptf.readline() # ignore first header line from script file 
         offset = 0
         for t in timing:
-            data = scriptf.read(t[1]).decode('utf-8')
+            data = escapeString(scriptf.read(t[1]))
             offset += t[0]
             ret.append((data, offset))
     return dumps(ret)
@@ -134,7 +143,7 @@ def parseTtyrec(scriptf):
             timing = int(ceil(secs * 1000 + float(usecs) / 1000))
             if oldtime: offset += timing - oldtime
             oldtime = timing
-            ret.append((data[pos:pos+amount].decode('utf-8'), offset))
+            ret.append((escapeString(data[pos:pos+amount]), offset))
             pos += amount
     return dumps(ret)
 

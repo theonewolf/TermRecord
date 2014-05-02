@@ -50,7 +50,7 @@
                                                                        timestr;
                 for (; pos < data.length; pos++) {
                     if (data[pos][1] <= time) {
-                        term.write(data[pos][0]);
+                        term.write(eval(data[pos][0]));
                     } else {
                         break;
                     }
