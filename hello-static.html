@@ -21,13 +21,14 @@
     <body>
         <input type="button" value="Play/Pause" onclick="pause(false);" /> 
         <input type="button" value="Restart" onclick="restart(1);" /> 
-        00:00:00 <input id="scrubber" type="range" value="0" min=0 max=100
-                  onmousedown="pause(true);" onmouseup="scrub();" />
+        <span id="beforeScrubberText"></span>
+        <input id="scrubber" type="range" value="0" min=0 max=100
+               onmousedown="pause(true);" onmouseup="scrub();" />
         <span id="afterScrubberText"></span>
         -5x <input id="speed" type="range" value="0" min=-5 max=5
                onmouseup="setSpeed();" /> +5x
         <script>
-            var data = [["\u001b]0;fish  /tmp/hello\u0007\u001b[30m\u001b(B\u001b[m", 228], ["Welcome to fish, the friendly interactive shell", 241], ["\r\n", 245], ["Type \u001b[32mhelp\u001b[30m\u001b(B\u001b[m for instructions on how to use fish", 246], ["\r\n", 247], ["\u001b]0", 248], [";fish", 259], ["  /tmp/hello\u0007\u001b[30m\u001b(B", 260], ["\u001b[", 261], ["m", 262], ["\u001b[38;5;245m\u23ce\u001b[0m                                                                                                             \r \r", 263], ["\u001b[1m\u001b[31m\u279c \u001b[1m\u001b[36mhello\u001b[30m\u001b(B\u001b[m>\u001b[K", 264], ["p\b\u001b[31m\u001b[1mp\u001b(B\u001b[m", 265], ["y\u001b[38;5;240mthon\b\b\b\b\b\u001b[30m\u001b(B\u001b[m", 1442], ["\u001b[31m\u001b[1my\u001b(B\u001b[mt\u001b[38;5;240mhon\b\b\b\b\u001b[30m\u001b(B\u001b[m", 1445], ["\u001b[31m\u001b[1mt\u001b(B\u001b[mh\u001b[38;5;240mon\b\b\b\u001b[30m\u001b(B\u001b[m", 1531], ["\u001b[31m\u001b[1mh\u001b(B\u001b[mo\u001b[38;5;240mn\b\b\u001b[30m\u001b(B\u001b[m", 1835], ["\u001b[31m\u001b[1mo\u001b(B\u001b[mn\b", 1995], ["\u001b[31m\u001b[1mn\u001b(B\u001b[m", 2084], ["\b\b\b\b\b\b\u001b[32mpython\u001b[30m\u001b(B\u001b[m", 2204], ["\r\n\u001b[30m\u001b(B\u001b[m\u001b]0;python  /tmp/hello\u0007\u001b[30m\u001b(B\u001b[m", 2205], ["Python 2.7.3 (default, Sep 26 2013, 20:03:06) \r\n[GCC 4.6.3] on linux2\r\nType \"help\", \"copyright\", \"credits\" or \"license\" for more information.", 3021], ["\r\n", 3046], [">>> ", 3047], ["f", 3048], ["r", 3703], ["o", 3799], ["m", 3888], [" ", 3984], ["t", 4192], ["i", 4408], ["m", 5633], ["e", 5690], [" ", 5803], ["i", 5915], ["m", 6276], ["p", 6340], ["o", 6501], ["r", 6541], ["t", 6621], [" ", 6830], ["s", 6894], ["l", 7022], ["e", 7111], ["e", 7215], ["p", 7343], ["\r\n>>> ", 7383], ["w", 7600], ["i", 9928], ["t", 10024], ["h", 10161], [" ", 10250], ["o", 10539], ["p", 10963], ["e", 11027], ["n", 11100], ["(", 11228], ["'", 11437], ["h", 11725], ["e", 12574], ["l", 12798], ["l", 12910], ["o", 13031], ["_", 13223], ["w", 18991], ["o", 19168], ["r", 19224], ["l", 19328], ["d", 19424], ["s", 19505], [".", 19601], ["t", 19682], ["x", 19906], ["t", 20098], ["'", 20211], [")", 20452], [" ", 20740], ["a", 22613], ["s", 22797], [" ", 22893], ["f", 23030], [":", 23142], ["\r\n... ", 23686], ["    ", 24167], ["f", 24607], ["o", 24936], ["r", 25033], [" ", 25089], ["l", 25226], ["i", 25387], ["n", 25595], ["e", 25668], [" ", 25764], ["i", 25852], ["n", 25997], [" ", 26045], ["f", 26214], [":", 26271], ["\r\n... ", 26591], ["    ", 27008], ["        ", 27360], ["p", 28017], ["r", 28281], ["i", 28409], ["n", 28506], ["t", 28578], [" ", 28634], ["l", 28763], ["i", 28995], ["n", 29195], ["e", 29252], ["\r\n... ", 29349], ["    ", 30366], ["        ", 30942], ["s", 31366], ["l", 32111], ["e", 32184], ["e", 32296], ["p", 32425], ["(", 32505], ["1", 32778], [")", 32979], ["\r\n... ", 33267], ["\r\n\u09ac\u09bf\u09b6\u09cd\u09ac \u09b9\u09cd\u09af\u09be\u09b2\u09cb!\r\n\r\n", 35924], ["\u0935\u093f\u0936\u094d\u0935 \u0928\u092e\u0938\u094d\u0915\u093e\u0930!\r\n\r\n", 37061], ["\u4f60\u597d\u4e16\u754c\uff01\r\n\r\n", 38063], ["saluton mondo!\r\n\r\n", 39065], ["bonjour tout le monde!\r\n\r\n", 40067], ["hallo welt!\r\n\r\n", 41069], ["dia duit Domhanda!\r\n\r\n", 42071], ["Ciao mondo!\r\n\r\n", 43072], ["\u4e16\u754c\u3053\u3093\u306b\u3061\u306f\uff01\r\n\r\n", 44074], ["\uc138\uacc4 \uc548\ub155\ud558\uc138\uc694!\r\n\r\n", 45076], ["Witaj \u015bwiecie!\r\n\r\n", 46078], ["Ol\u00e1 mundo!\r\n\r\n", 47080], ["\u041f\u0440\u0438\u0432\u0435\u0442 \u043c\u0438\u0440!\r\n\r\n", 48082], ["\u00a1Hola Mundo!\r\n\r\n", 49084], ["Hej v\u00e4rlden!\r\n\r\n", 50086], [">>> ", 51087], ["e", 52089], ["x", 53953], ["i", 54049], ["t", 54169], ["(", 54337], [")", 54698], ["\r\n", 54738], ["\u001b]0;fi", 55126], ["sh  ", 55133], ["/t", 55134], ["mp/", 55135], ["he", 55136], ["llo", 55137], ["\u0007", 55138], ["\u001b[30m\u001b(B\u001b", 55139], ["[m", 55140], ["\u001b[38;5;245m\u23ce\u001b[0m                                                                                                             \r \r", 55141], ["\u001b[1m\u001b[31m\u279c \u001b[1m\u001b[36mhello\u001b[30m\u001b(B\u001b[m>\u001b[K", 55142], ["e\b\u001b[31m\u001b[1me\u001b(B\u001b[mx\u001b[38;5;240mit\b\b\b\u001b[30m\u001b(B\u001b[m", 55143], ["\u001b[31m\u001b[1mx\u001b(B\u001b[mi\u001b[38;5;240mt\b\b\u001b[30m\u001b(B\u001b[m\b\b\u001b[32mex\u001b[30m\u001b(B\u001b[mi\u001b[38;5;240mt\b\b\u001b[30m\u001b(B\u001b[m", 55550], ["\u001b[32mi\u001b[30m\u001b(B\u001b[mt\b\b\b\b\u001b[31m\u001b[1mexi\u001b(B\u001b[mt\b", 55646], ["\u001b[31m\u001b[1mt\u001b(B\u001b[m\b\b\b\b\u001b[32mexit\u001b[30m\u001b(B\u001b[m", 55726], ["\r\n\u001b[30m\u001b(B\u001b[m\u001b]0;exit  /tmp/hello\u0007\u001b[30m\u001b(B\u001b[m", 55902], ["\r\n\u001b[30m\u001b(B\u001b[m", 56175]];
+            var data = [["'\\x1b]0;fish  /tmp/hello\\x07\\x1b[30m\\x1b(B\\x1b[m'", 228], ["'Welcome to fish, the friendly interactive shell'", 241], ["'\\r\\n'", 245], ["'Type \\x1b[32mhelp\\x1b[30m\\x1b(B\\x1b[m for instructions on how to use fish'", 246], ["'\\r\\n'", 247], ["'\\x1b]0'", 248], ["';fish'", 259], ["'  /tmp/hello\\x07\\x1b[30m\\x1b(B'", 260], ["'\\x1b['", 261], ["'m'", 262], ["'\\x1b[38;5;245m\\u23ce\\x1b[0m                                                                                                             \\r \\r'", 263], ["'\\x1b[1m\\x1b[31m\\u279c \\x1b[1m\\x1b[36mhello\\x1b[30m\\x1b(B\\x1b[m>\\x1b[K'", 264], ["'p\\x08\\x1b[31m\\x1b[1mp\\x1b(B\\x1b[m'", 265], ["'y\\x1b[38;5;240mthon\\x08\\x08\\x08\\x08\\x08\\x1b[30m\\x1b(B\\x1b[m'", 1442], ["'\\x1b[31m\\x1b[1my\\x1b(B\\x1b[mt\\x1b[38;5;240mhon\\x08\\x08\\x08\\x08\\x1b[30m\\x1b(B\\x1b[m'", 1445], ["'\\x1b[31m\\x1b[1mt\\x1b(B\\x1b[mh\\x1b[38;5;240mon\\x08\\x08\\x08\\x1b[30m\\x1b(B\\x1b[m'", 1531], ["'\\x1b[31m\\x1b[1mh\\x1b(B\\x1b[mo\\x1b[38;5;240mn\\x08\\x08\\x1b[30m\\x1b(B\\x1b[m'", 1835], ["'\\x1b[31m\\x1b[1mo\\x1b(B\\x1b[mn\\x08'", 1995], ["'\\x1b[31m\\x1b[1mn\\x1b(B\\x1b[m'", 2084], ["'\\x08\\x08\\x08\\x08\\x08\\x08\\x1b[32mpython\\x1b[30m\\x1b(B\\x1b[m'", 2204], ["'\\r\\n\\x1b[30m\\x1b(B\\x1b[m\\x1b]0;python  /tmp/hello\\x07\\x1b[30m\\x1b(B\\x1b[m'", 2205], ["'Python 2.7.3 (default, Sep 26 2013, 20:03:06) \\r\\n[GCC 4.6.3] on linux2\\r\\nType \"help\", \"copyright\", \"credits\" or \"license\" for more information.'", 3021], ["'\\r\\n'", 3046], ["'>>> '", 3047], ["'f'", 3048], ["'r'", 3703], ["'o'", 3799], ["'m'", 3888], ["' '", 3984], ["'t'", 4192], ["'i'", 4408], ["'m'", 5633], ["'e'", 5690], ["' '", 5803], ["'i'", 5915], ["'m'", 6276], ["'p'", 6340], ["'o'", 6501], ["'r'", 6541], ["'t'", 6621], ["' '", 6830], ["'s'", 6894], ["'l'", 7022], ["'e'", 7111], ["'e'", 7215], ["'p'", 7343], ["'\\r\\n>>> '", 7383], ["'w'", 7600], ["'i'", 9928], ["'t'", 10024], ["'h'", 10161], ["' '", 10250], ["'o'", 10539], ["'p'", 10963], ["'e'", 11027], ["'n'", 11100], ["'('", 11228], ["'\\''", 11437], ["'h'", 11725], ["'e'", 12574], ["'l'", 12798], ["'l'", 12910], ["'o'", 13031], ["'_'", 13223], ["'w'", 18991], ["'o'", 19168], ["'r'", 19224], ["'l'", 19328], ["'d'", 19424], ["'s'", 19505], ["'.'", 19601], ["'t'", 19682], ["'x'", 19906], ["'t'", 20098], ["'\\''", 20211], ["')'", 20452], ["' '", 20740], ["'a'", 22613], ["'s'", 22797], ["' '", 22893], ["'f'", 23030], ["':'", 23142], ["'\\r\\n... '", 23686], ["'    '", 24167], ["'f'", 24607], ["'o'", 24936], ["'r'", 25033], ["' '", 25089], ["'l'", 25226], ["'i'", 25387], ["'n'", 25595], ["'e'", 25668], ["' '", 25764], ["'i'", 25852], ["'n'", 25997], ["' '", 26045], ["'f'", 26214], ["':'", 26271], ["'\\r\\n... '", 26591], ["'    '", 27008], ["'        '", 27360], ["'p'", 28017], ["'r'", 28281], ["'i'", 28409], ["'n'", 28506], ["'t'", 28578], ["' '", 28634], ["'l'", 28763], ["'i'", 28995], ["'n'", 29195], ["'e'", 29252], ["'\\r\\n... '", 29349], ["'    '", 30366], ["'        '", 30942], ["'s'", 31366], ["'l'", 32111], ["'e'", 32184], ["'e'", 32296], ["'p'", 32425], ["'('", 32505], ["'1'", 32778], ["')'", 32979], ["'\\r\\n... '", 33267], ["'\\r\\n\\u09ac\\u09bf\\u09b6\\u09cd\\u09ac \\u09b9\\u09cd\\u09af\\u09be\\u09b2\\u09cb!\\r\\n\\r\\n'", 35924], ["'\\u0935\\u093f\\u0936\\u094d\\u0935 \\u0928\\u092e\\u0938\\u094d\\u0915\\u093e\\u0930!\\r\\n\\r\\n'", 37061], ["'\\u4f60\\u597d\\u4e16\\u754c\\uff01\\r\\n\\r\\n'", 38063], ["'saluton mondo!\\r\\n\\r\\n'", 39065], ["'bonjour tout le monde!\\r\\n\\r\\n'", 40067], ["'hallo welt!\\r\\n\\r\\n'", 41069], ["'dia duit Domhanda!\\r\\n\\r\\n'", 42071], ["'Ciao mondo!\\r\\n\\r\\n'", 43072], ["'\\u4e16\\u754c\\u3053\\u3093\\u306b\\u3061\\u306f\\uff01\\r\\n\\r\\n'", 44074], ["'\\uc138\\uacc4 \\uc548\\ub155\\ud558\\uc138\\uc694!\\r\\n\\r\\n'", 45076], ["'Witaj \\u015bwiecie!\\r\\n\\r\\n'", 46078], ["'Ol\\xe1 mundo!\\r\\n\\r\\n'", 47080], ["'\\u041f\\u0440\\u0438\\u0432\\u0435\\u0442 \\u043c\\u0438\\u0440!\\r\\n\\r\\n'", 48082], ["'\\xa1Hola Mundo!\\r\\n\\r\\n'", 49084], ["'Hej v\\xe4rlden!\\r\\n\\r\\n'", 50086], ["'>>> '", 51087], ["'e'", 52089], ["'x'", 53953], ["'i'", 54049], ["'t'", 54169], ["'('", 54337], ["')'", 54698], ["'\\r\\n'", 54738], ["'\\x1b]0;fi'", 55126], ["'sh  '", 55133], ["'/t'", 55134], ["'mp/'", 55135], ["'he'", 55136], ["'llo'", 55137], ["'\\x07'", 55138], ["'\\x1b[30m\\x1b(B\\x1b'", 55139], ["'[m'", 55140], ["'\\x1b[38;5;245m\\u23ce\\x1b[0m                                                                                                             \\r \\r'", 55141], ["'\\x1b[1m\\x1b[31m\\u279c \\x1b[1m\\x1b[36mhello\\x1b[30m\\x1b(B\\x1b[m>\\x1b[K'", 55142], ["'e\\x08\\x1b[31m\\x1b[1me\\x1b(B\\x1b[mx\\x1b[38;5;240mit\\x08\\x08\\x08\\x1b[30m\\x1b(B\\x1b[m'", 55143], ["'\\x1b[31m\\x1b[1mx\\x1b(B\\x1b[mi\\x1b[38;5;240mt\\x08\\x08\\x1b[30m\\x1b(B\\x1b[m\\x08\\x08\\x1b[32mex\\x1b[30m\\x1b(B\\x1b[mi\\x1b[38;5;240mt\\x08\\x08\\x1b[30m\\x1b(B\\x1b[m'", 55550], ["'\\x1b[32mi\\x1b[30m\\x1b(B\\x1b[mt\\x08\\x08\\x08\\x08\\x1b[31m\\x1b[1mexi\\x1b(B\\x1b[mt\\x08'", 55646], ["'\\x1b[31m\\x1b[1mt\\x1b(B\\x1b[m\\x08\\x08\\x08\\x08\\x1b[32mexit\\x1b[30m\\x1b(B\\x1b[m'", 55726], ["'\\r\\n\\x1b[30m\\x1b(B\\x1b[m\\x1b]0;exit  /tmp/hello\\x07\\x1b[30m\\x1b(B\\x1b[m'", 55902], ["'\\r\\n\\x1b[30m\\x1b(B\\x1b[m'", 56175]];
             var toggle = true;
             var totalTime = 0;
             var TICK = 33;
@@ -36,29 +37,36 @@
             var pos = 0;
             var timer;
 
+            // Thanks http://stackoverflow.com/a/2998822
+            function zeroPad(num, size) {
+                var s = "0" + num;
+                return s.substr(s.length-size);
+            }
+
             function scrub() {
                setPercent = document.getElementById('scrubber').value;
                time = (setPercent / 100) * totalTime;
                restart(time); 
             }
 
-            function buildTimeString() {
-                millis  = data[data.length - 1][1];
-                totalTime = millis;
-                hours   = Math.floor(millis / (1000 * 60 * 60));
+            function buildTimeString(millis) {
+                hours   = zeroPad(Math.floor(millis / (1000 * 60 * 60)), 2);
                 millis -= hours * (1000 * 60 * 60)
-                minutes = Math.floor(millis / (1000 * 60));
+                minutes = zeroPad(Math.floor(millis / (1000 * 60)), 2);
                 millis -= minutes * (1000 * 60);
-                seconds = Math.floor(millis / 1000);
+                seconds = zeroPad(Math.floor(millis / 1000), 2);
                 return hours + ':' + minutes + ':' + seconds;
             }
 
             function advance() {
                 document.getElementById('scrubber').value =
                                            Math.ceil((time / totalTime) * 100);
+                timestr = buildTimeString(time);
+                document.getElementById("beforeScrubberText").innerHTML = 
+                                                                       timestr;
                 for (; pos < data.length; pos++) {
                     if (data[pos][1] <= time) {
-                        term.write(data[pos][0]);
+                        term.write(eval(data[pos][0]));
                     } else {
                         break;
                     }
@@ -109,8 +117,9 @@
                                         rows: 30,
                                         screenKeys: true
                                     });
-            timestr = buildTimeString();
-            document.getElementById("afterScrubberText").innerHTML=timestr;
+            totalTime = data[data.length - 1][1];
+            timestr = buildTimeString(totalTime);
+            document.getElementById("afterScrubberText").innerHTML = timestr;
             term.open(document.body);
             timer = setInterval(advance, TICK);
             </script>
