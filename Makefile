@@ -1,9 +1,9 @@
 DYNAMIC_OBJS	=	examples/binary-dynamic.html examples/figlet-dynamic.html \
 					examples/gcc-dynamic.html examples/hello-dynamic.html \
-					examples/htop-dynamic.html
+					examples/htop-dynamic.html examples/mc-dynamic.html
 STATIC_OBJS		=	examples/binary-static.html examples/figlet-static.html \
 					examples/gcc-static.html examples/hello-static.html \
-					examples/htop-static.html
+					examples/htop-static.html examples/mc-static.html
 DYN_DEP			=	src/TermRecord templates/dynamic.jinja2 \
 					templates/base.jinja2
 STATIC_DEP		=	src/TermRecord templates/static.jinja2 \
