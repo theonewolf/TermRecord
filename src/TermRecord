@@ -25,7 +25,7 @@ from math import ceil
 from os.path import basename, dirname, exists
 from struct import unpack
 from subprocess import Popen
-from sys import platform, stderr, stdout
+from sys import platform, stderr
 from tempfile import NamedTemporaryFile
 
 from jinja2 import FileSystemLoader, Template
@@ -63,12 +63,9 @@ def testOSX():
     return platform == 'darwin' 
 
 def escapeString(string):
-    try:
-        string = string.decode(stdout.encoding).encode('unicode_escape')
-        string = string.replace("'", "\\'")
-        string = '\'' + string + '\''
-    except:
-        string = '\'' + string.encode('string_escape') + '\''
+    string = string.decode('utf-8', 'replace').encode('unicode_escape')
+    string = string.replace("'", "\\'")
+    string = '\'' + string + '\''
     return string
 
 def runScript(command=None):
