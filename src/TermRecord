@@ -165,7 +165,7 @@ if __name__ == '__main__':
     argparser   =   ArgumentParser(description=
                                         'Stores terminal sessions into HTML.')
 
-    argparser.add_argument('-b', '--backend', type=str, default='script',
+    argparser.add_argument('-b', '--backend', type=str,
                            choices=['script', 'ttyrec'], 
                            help='use either script or ttyrec', required=False)
     argparser.add_argument('-c', '--command', type=str,
@@ -208,8 +208,11 @@ if __name__ == '__main__':
                         'specified together.')
         exit(1)
 
-    if isOSX and not backend:
-        backend = TTYREC 
+    if not backend:
+        if isOSX:
+            backend = TTYREC 
+        else:
+            backend = 'script'
    
     if not json_only and not js_only and tmpname and not exists(tmpname):
         stderr.write('Error: Template ("%s") does not exist.\n' % (tmpname))
