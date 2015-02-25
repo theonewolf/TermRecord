@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# vim: set nospell:
 ##############################################################################
 # TermRecord.py                                                              #
 #                                                                            #
@@ -12,7 +13,7 @@
 #   Authors: Wolfgang Richter <wolfgang.richter@gmail.com>                   #
 #                                                                            #
 #                                                                            #
-#   Copyright 2014 Wolfgang Richter and licensed under the MIT License.      #
+#   Copyright 2014-2015 Wolfgang Richter and licensed under the MIT License. #
 #                                                                            #
 ##############################################################################
 
