@@ -239,10 +239,10 @@ if __name__ == '__main__':
         json = scriptToJSON(scriptf, timing)
 
     if json_only:
-        print json
+        print(json)
     elif js_only:
-        print 'JS ONLY PLEASE IMPLEMENT ME.'
+        print('JS ONLY PLEASE IMPLEMENT ME.')
     elif tmpname and outf:
         renderTemplate(json, dimensions, tmpname, outf)
     elif tmpname:
-        print renderTemplate(json, dimensions, tmpname)
+        print(renderTemplate(json, dimensions, tmpname))
