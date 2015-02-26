@@ -44,7 +44,7 @@ from setuptools import setup
 
 setup(
     name='TermRecord',
-    version='1.1.3',
+    version='1.2.0',
     url='http://github.com/theonewolf/TermRecord',
     license='MIT',
     author='Wolfgang Richter',
@@ -53,10 +53,10 @@ setup(
                 'HTML output!',
     long_description=__doc__,
     scripts = ['src/TermRecord'],
-    data_files = [('/usr/local/share/TermRecord/templates',
-                                                 ['templates/dynamic.jinja2',
-                                                  'templates/base.jinja2',
-                                                  'templates/static.jinja2'])],
+    data_files = [('local/share/TermRecord',
+                                ['templates/dynamic.jinja2',
+                                 'templates/base.jinja2',
+                                 'templates/static.jinja2'])],
     install_requires=[
         'Jinja2>=2.6'
     ],
@@ -71,6 +71,7 @@ setup(
         'Operating System :: MacOS :: MacOS X',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
         'Topic :: System :: Logging',
         'Topic :: Terminals'
     ]

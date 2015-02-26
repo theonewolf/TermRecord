@@ -24,10 +24,10 @@ from contextlib import closing
 from codecs import open as copen
 from json import dumps
 from math import ceil
-from os.path import basename, dirname, exists
+from os.path import basename, dirname, exists, join
 from struct import unpack
 from subprocess import Popen
-from sys import platform, stderr
+from sys import platform, prefix, stderr
 from tempfile import NamedTemporaryFile
 
 from jinja2 import FileSystemLoader, Template
@@ -35,7 +35,8 @@ from jinja2.environment import  Environment
 
 
 
-DEFAULT_TEMPLATE    =   '/usr/local/share/TermRecord/templates/static.jinja2'
+DEFAULT_TEMPLATE    =   join(prefix, 'local', 'share', 'TermRecord',
+                             'templates', 'static.jinja2')
 TTYREC              =   'ttyrec'
 
 
