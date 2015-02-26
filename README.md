@@ -31,6 +31,7 @@ Here is a selection of demos showing off the capabilities of TermRecord across
 a variety of shell sessions:
 
 - [Using TermRecord](http://theonewolf.github.io/TermRecord/demo-static.html)
+- [Hello avplay Video](http://theonewolf.github.io/TermRecord/avplay-static.html)
 - [Hello Worlds](http://theonewolf.github.io/TermRecord/hello-static.html)
 - [Using Figlet](http://theonewolf.github.io/TermRecord/figlet-static.html)
 - [Using gcc and vim](http://theonewolf.github.io/TermRecord/gcc-static.html)
