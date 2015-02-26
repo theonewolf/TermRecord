@@ -53,7 +53,7 @@ setup(
                 'HTML output!',
     long_description=__doc__,
     scripts = ['src/TermRecord'],
-    data_files = [('local/share/TermRecord',
+    data_files = [('local/share/TermRecord/templates',
                                 ['templates/dynamic.jinja2',
                                  'templates/base.jinja2',
                                  'templates/static.jinja2'])],
