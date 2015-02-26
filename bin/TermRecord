@@ -111,7 +111,7 @@ def runTtyrec(command=None):
 
     proc = Popen(CMD)
     proc.wait()
-    return copen(scriptfname, encoding='utf-8', errors='replace')
+    return open(scriptfname, 'rb')
 
 def getTiming(timef):
     timing = None 
@@ -146,7 +146,8 @@ def parseTtyrec(scriptf):
             timing = int(ceil(secs * 1000 + float(usecs) / 1000))
             if oldtime: offset += timing - oldtime
             oldtime = timing
-            ret.append((escapeString(data[pos:pos+amount]), offset))
+            ret.append((escapeString(data[pos:pos+amount].decode(
+                        encoding='utf-8', errors='replace')), offset))
             pos += amount
     return dumps(ret)
 
@@ -235,7 +236,11 @@ if __name__ == '__main__':
         else:
             scriptf,timef = runScript(command)
     else:
-        scriptf = copen(scriptf, encoding='utf-8', errors='replace')
+        if backend == TTYREC:
+            scriptf = open(scriptf, 'rb')
+        else:
+            scriptf = copen(scriptf, encoding='utf-8', errors='replace')
+
 
     if backend == TTYREC:
         json = parseTtyrec(scriptf)
