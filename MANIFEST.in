@@ -1,2 +1,2 @@
 include bin/TermRecord
-include templates/*.jinja2
+include termrecord/templates/*.jinja2
