@@ -156,11 +156,11 @@ def renderTemplate(json, dimensions, templatename, outfname=None):
     rendered = e.get_template(templatename).render(json=json,
                                                    dimensions=dimensions)
 
-    if not outf:
+    if not outfname:
         return rendered
 
-    with closing(outf):
-        outf.write(rendered)
+    with closing(outfname):
+        outfname.write(rendered)
 
 
 
