@@ -92,7 +92,7 @@ def runScript(command=None):
         proc = Popen(CMD, stderr=timingf)
         proc.wait()
 
-    return copen(scriptfname, encoding='utf-8'), \
+    return copen(scriptfname, encoding='utf-8', errors='replace'), \
            open(timingfname, 'r')
 
 def runTtyrec(command=None):
@@ -110,7 +110,7 @@ def runTtyrec(command=None):
 
     proc = Popen(CMD)
     proc.wait()
-    return open(scriptfname, 'r') 
+    return copen(scriptfname, encoding='utf-8', errors='replace')
 
 def getTiming(timef):
     timing = None 
@@ -189,7 +189,7 @@ if __name__ == '__main__':
                            help='file to use as HTML template', required=False)
     argparser.add_argument('-o', '--output-file', type=FileType('w'),
                            help='file to output HTML to', required=False)
-    argparser.add_argument('-s', '--script-file', type=FileType('r'),
+    argparser.add_argument('-s', '--script-file', type=str,
                            help='script file to parse', required=False)
     argparser.add_argument('-t', '--timing-file', type=FileType('r'),
                            help='timing file to parse', required=False)
@@ -233,6 +233,8 @@ if __name__ == '__main__':
             scriptf = runTtyrec(command)
         else:
             scriptf,timef = runScript(command)
+    else:
+        scriptf = copen(scriptf, encoding='utf-8', errors='replace')
 
     if backend == TTYREC:
         json = parseTtyrec(scriptf)
