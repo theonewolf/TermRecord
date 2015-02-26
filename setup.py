@@ -40,11 +40,11 @@ Links
 
 
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='TermRecord',
-    version='1.2.1',
+    version='1.2.2',
     url='http://github.com/theonewolf/TermRecord',
     license='MIT',
     author='Wolfgang Richter',
@@ -52,11 +52,11 @@ setup(
     description='A simple terminal session recorder with easy-to-share '
                 'HTML output!',
     long_description=__doc__,
-    scripts = ['src/TermRecord'],
-    data_files = [('local/share/TermRecord/templates',
-                                ['templates/dynamic.jinja2',
-                                 'templates/base.jinja2',
-                                 'templates/static.jinja2'])],
+    scripts = ['bin/TermRecord'],
+    packages=find_packages(),
+    package_data = {'termrecord' : ['templates/dynamic.jinja2',
+                                    'templates/base.jinja2',
+                                    'templates/static.jinja2']},
     install_requires=[
         'Jinja2>=2.6'
     ],
