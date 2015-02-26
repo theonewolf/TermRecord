@@ -21,6 +21,7 @@
 
 from argparse import ArgumentParser, FileType
 from contextlib import closing
+from codecs import open as copen
 from json import dumps
 from math import ceil
 from os.path import basename, dirname, exists
@@ -64,7 +65,7 @@ def testOSX():
     return platform == 'darwin' 
 
 def escapeString(string):
-    string = string.decode('utf-8', 'replace').encode('unicode_escape')
+    string = string.encode('unicode_escape').decode('utf-8')
     string = string.replace("'", "\\'")
     string = '\'' + string + '\''
     return string
@@ -91,7 +92,8 @@ def runScript(command=None):
         proc = Popen(CMD, stderr=timingf)
         proc.wait()
 
-    return open(scriptfname, 'r'), open(timingfname, 'r') 
+    return copen(scriptfname, encoding='utf-8'), \
+           open(timingfname, 'r')
 
 def runTtyrec(command=None):
     scriptfname = None
