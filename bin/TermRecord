@@ -56,14 +56,14 @@ def probeDimensions(fd=1):
     except:
         try:
             hw = (os.environ['LINES'], os.environ['COLUMNS'])
-        except:  
+        except:
             hw = (24, 80)
 
     return hw
 
 # http://stackoverflow.com/a/8220141/3362361
 def testOSX():
-    return platform == 'darwin' 
+    return platform == 'darwin'
 
 def escapeString(string):
     string = string.encode('unicode_escape').decode('utf-8')
@@ -71,15 +71,22 @@ def escapeString(string):
     string = '\'' + string + '\''
     return string
 
-def runScript(command=None):
+def runScript(command=None, tempfile=None):
     timingfname = None
     scriptfname = None
     CMD = ['script']
 
-    with NamedTemporaryFile(delete=False) as timingf:
-        with NamedTemporaryFile(delete=False) as scriptf:
-            timingfname = timingf.name 
-            scriptfname = scriptf.name
+    if tempfile:
+        timingfname = "%s.timing" % str(tempfile)
+        scriptfname = "%s.log" % str(tempfile)
+        with open(timingfname, 'w'):
+            with open(scriptfname, 'w'):
+                pass
+    else:
+        with NamedTemporaryFile(delete=False) as timingf:
+            with NamedTemporaryFile(delete=False) as scriptf:
+                timingfname = timingf.name
+                scriptfname = scriptf.name
 
     CMD.append('-t')
 
@@ -114,7 +121,7 @@ def runTtyrec(command=None):
     return open(scriptfname, 'rb')
 
 def getTiming(timef):
-    timing = None 
+    timing = None
     with closing(timef):
         timing = [l.strip().split(' ') for l in timef]
         timing = [(int(ceil(float(r[0]) * 1000)), int(r[1])) for r in timing]
@@ -124,7 +131,7 @@ def scriptToJSON(scriptf, timing=None):
     ret = []
 
     with closing(scriptf):
-        scriptf.readline() # ignore first header line from script file 
+        scriptf.readline() # ignore first header line from script file
         offset = 0
         for t in timing:
             data = escapeString(scriptf.read(t[1]))
@@ -173,7 +180,7 @@ if __name__ == '__main__':
                                         'Stores terminal sessions into HTML.')
 
     argparser.add_argument('-b', '--backend', type=str,
-                           choices=['script', 'ttyrec'], 
+                           choices=['script', 'ttyrec'],
                            help='use either script or ttyrec', required=False)
     argparser.add_argument('-c', '--command', type=str,
                            help='run a command and quit', required=False)
@@ -195,6 +202,8 @@ if __name__ == '__main__':
                            help='script file to parse', required=False)
     argparser.add_argument('-t', '--timing-file', type=FileType('r'),
                            help='timing file to parse', required=False)
+    argparser.add_argument('--tempfile', type=str,
+                           help='full path for tempfiles (extensions will be added)', required=False)
 
     ns = argparser.parse_args()
 
@@ -204,7 +213,8 @@ if __name__ == '__main__':
     tmpname     =   ns.template_file
     scriptf     =   ns.script_file
     outf        =   ns.output_file
-    timef       =   ns.timing_file 
+    timef       =   ns.timing_file
+    tempfile    =   ns.tempfile
     json_only   =   ns.json
     js_only     =   ns.js
     isOSX       =   testOSX()
@@ -217,10 +227,10 @@ if __name__ == '__main__':
 
     if not backend:
         if isOSX:
-            backend = TTYREC 
+            backend = TTYREC
         else:
             backend = 'script'
-   
+
     if not json_only and not js_only and tmpname and not exists(tmpname):
         stderr.write('Error: Template ("%s") does not exist.\n' % (tmpname))
         stderr.write('If you only wanted JSON output, use "--json"\n')
@@ -234,7 +244,7 @@ if __name__ == '__main__':
         if backend == TTYREC:
             scriptf = runTtyrec(command)
         else:
-            scriptf,timef = runScript(command)
+            scriptf,timef = runScript(command=command, tempfile=tempfile)
     else:
         if backend == TTYREC:
             scriptf = open(scriptf, 'rb')
