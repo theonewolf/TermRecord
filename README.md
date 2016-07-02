@@ -13,7 +13,7 @@ TermRecord -o /tmp/session.html
 On Mac OS X you will need `ttyrec` as well:
 
 ```bash
-sudo brew install ttyrec
+brew install ttyrec
 ```
 
 If you want to run from source and not install:
