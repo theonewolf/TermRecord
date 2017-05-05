@@ -54,7 +54,9 @@ setup(
     long_description=__doc__,
     scripts = ['bin/TermRecord'],
     packages=find_packages(),
-    package_data = {'termrecord' : ['templates/dynamic.jinja2',
+    package_data = {'termrecord' : ['FONT-LICENSE',
+                                    'LICENSE',
+                                    'templates/dynamic.jinja2',
                                     'templates/base.jinja2',
                                     'templates/static.jinja2']},
     install_requires=[

@@ -1,2 +1,4 @@
+include FONT-LICENSE
+include LICENSE
 include bin/TermRecord
 include termrecord/templates/*.jinja2
